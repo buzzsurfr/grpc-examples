@@ -6,6 +6,7 @@ vars:
   REGISTRY: ""
   REPOSITORY: buzzsurfr
   TAG: latest
+  PROTODIR: helloworld
 
 includes:
   client:

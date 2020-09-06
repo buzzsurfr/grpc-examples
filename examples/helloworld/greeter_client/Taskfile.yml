@@ -10,7 +10,7 @@ tasks:
   build:
     desc: Build the go binary.
     cmds:
-      - go build -o {{.CLIENT_APP}}{{exeExt}} {{.CLIENT_APP}}/main.go
+      - go install .
     env:
       CGO_ENABLED: 0
     sources:
@@ -21,7 +21,7 @@ tasks:
   clean:
     desc: Deletes the go binary.
     cmds:
-      - rm {{.CLIENT_APP}}{{exeExt}}
+      - go clean -i .
   build-container:
     desc: Build the Docker container locally.
     cmds:
