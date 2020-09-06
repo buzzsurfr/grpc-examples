@@ -1,0 +1,39 @@
+version: '3'
+
+vars:
+  CLIENT_APP: greeter_client
+  REGISTRY: ""
+  REPOSITORY: buzzsurfr
+  TAG: latest
+
+tasks:
+  build:
+    desc: Build the go binary.
+    cmds:
+      - go build -o {{.CLIENT_APP}}{{exeExt}} {{.CLIENT_APP}}/main.go
+    env:
+      CGO_ENABLED: 0
+    sources:
+      - ./*.go
+    generates:
+      - ./{{.CLIENT_APP}}{{exeExt}}
+    method: checksum
+  clean:
+    desc: Deletes the go binary.
+    cmds:
+      - rm {{.CLIENT_APP}}{{exeExt}}
+  build-container:
+    desc: Build the Docker container locally.
+    cmds:
+      - docker build -t {{.REGISTRY}}{{if ne .REGISTRY ""}}/{{end}}{{.REPOSITORY}}{{if ne .REPOSITORY ""}}/{{end}}{{.CLIENT_APP}}:{{.TAG}} .
+  run-container:
+    desc: Run the Docker container locally.
+    cmds:
+      - docker run -d --name {{.CLIENT_APP}} --link greeter_server -e "GREETER_ENDPOINT=greeter_server:50051" {{.REGISTRY}}{{if ne .REGISTRY ""}}/{{end}}{{.REPOSITORY}}{{if ne .REPOSITORY ""}}/{{end}}{{.CLIENT_APP}}:{{.TAG}}
+  clean-container:
+    desc: Stops and removes the container locally.
+    cmds:
+      - cmd: docker stop {{.CLIENT_APP}} > /dev/null 2>&1
+        ignore_error: true
+      - cmd: docker rm {{.CLIENT_APP}} > /dev/null 2>&1
+        ignore_error: true
