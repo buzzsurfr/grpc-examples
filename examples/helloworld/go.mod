@@ -1,9 +1,9 @@
 module github.com/buzzsurfr/grpc-examples/examples/helloworld
 
-go 1.14
+go 1.15
 
 require (
-	github.com/golang/protobuf v1.4.1
+	github.com/golang/protobuf v1.4.2
 	google.golang.org/grpc v1.31.1
-	google.golang.org/protobuf v1.25.0
+	google.golang.org/protobuf v1.25.0 // indirect
 )
