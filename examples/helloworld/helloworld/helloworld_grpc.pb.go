@@ -86,7 +86,7 @@ func RegisterGreeterService(s grpc.ServiceRegistrar, srv *GreeterService) {
 			},
 		},
 		Streams:  []grpc.StreamDesc{},
-		Metadata: "examples/helloworld/helloworld/helloworld.proto",
+		Metadata: "helloworld.proto",
 	}
 
 	s.RegisterService(&sd, nil)
