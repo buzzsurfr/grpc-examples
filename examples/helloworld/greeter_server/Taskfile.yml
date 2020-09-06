@@ -26,6 +26,10 @@ tasks:
     desc: Build the Docker container locally.
     cmds:
       - docker build -t {{.REGISTRY}}{{if ne .REGISTRY ""}}/{{end}}{{.REPOSITORY}}{{if ne .REPOSITORY ""}}/{{end}}{{.SERVER_APP}}:{{.TAG}} .
+  buildx-container:
+    desc: Builds and pushes the multi-architecture image.
+    cmds:
+      - docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag {{.REGISTRY}}{{if ne .REGISTRY ""}}/{{end}}{{.REPOSITORY}}{{if ne .REPOSITORY ""}}/{{end}}{{.SERVER_APP}}:{{.TAG}} --push .
   run-container:
     desc: Run the Docker container locally.
     cmds:

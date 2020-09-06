@@ -22,3 +22,8 @@ tasks:
     cmds:
       - protoc -I {{.PROTODIR}} --go_out=paths=source_relative:{{.PROTODIR}} --go-grpc_out=paths=source_relative:{{.PROTODIR}} helloworld.proto
       # - protoc -I /go/src/github.com/buzzsurfr/grpc-examples/examples/helloworld/helloworld --go_out=/go/src/ --go-grpc_out=/go/src/ helloworld.proto
+  build-container:
+    desc: Builds and pushes this example's containers.
+    cmds:
+      - task: client:buildx-container
+      - task: server:buildx-container
